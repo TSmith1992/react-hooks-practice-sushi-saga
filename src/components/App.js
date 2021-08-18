@@ -13,17 +13,22 @@ function App() {
   const [plates, setPlates]=useState([])
 
 
+  
   useEffect(() => {
     fetch(API)
       .then((r) => r.json())
-      .then((data) => setServerInfo(data));
+      .then((data) => {
+        setServerInfo(data)
+        setOnlyFour(data.slice(sliceA,sliceB))
+      });
   }, []);
 
-  let mappedServerInfo = serverInfo.map((sushi) => (
+  const [onlyFour, setOnlyFour]=useState(serverInfo.slice(sliceA, sliceB))
+
+  let mappedServerInfo = onlyFour.map((sushi) => (
     <Sushi sushi={sushi} sushiEaten={sushiEaten}/>
   ))
 
-  const [onlyFour, setOnlyFour]=useState(mappedServerInfo.slice(0, 6))
   
   function nextFourSushi(e){
 
@@ -43,7 +48,7 @@ function App() {
   
   return (
     <div className="app">
-      <SushiContainer serverInfo={serverInfo} sushiEaten={sushiEaten} onlyFour={onlyFour} nextFourSushi={nextFourSushi}/>
+      <SushiContainer serverInfo={serverInfo} sushiEaten={sushiEaten} onlyFour={mappedServerInfo} nextFourSushi={nextFourSushi}/>
       <Table plates={plates}/>
     </div>
   );
