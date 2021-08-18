@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 
-function Table({ plates = [] }) {
-  // renders an empty plate for every element in the array
+function Table({ plates, onlyFour}) {
+  
+  //renders an empty plate for every element in the array
   const emptyPlates = plates.map((_, index) => (
     <div key={index} className="empty-plate" style={{ top: -7 * index }} />
   ));
